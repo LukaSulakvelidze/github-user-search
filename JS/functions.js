@@ -84,7 +84,7 @@ export function check_user() {
   fetch(`https://api.github.com/users/${input.value}`)
     .then((response) => response.json())
     .then((data) => {
-      if (data.name == undefined || input.value === "") {
+      if (data.login == undefined) {
         loader();
         setTimeout(() => {
           stop_loader();
@@ -117,8 +117,12 @@ export function api_search() {
         item.src = `${data.avatar_url}`;
       });
 
-      let user_name = document.querySelector(".user_name");
-      user_name.textContent = `${data.name}`;
+      let user_name = document.querySelector(".user_name");   
+      if (data.name === null) {
+        user_name.textContent = "No Name";
+      } else {
+        user_name.textContent = `${data.name}`;
+      }
 
       let username = document.querySelector(".username");
       username.textContent = `${data.login}`;
